@@ -1,4 +1,4 @@
-package ru.gb;
+package ru.gb.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,7 +18,7 @@ public class CustomerDao {
 
     // 3 *
 
-    List<Customer> getCustomersByProductId(Long id) {
+    public List<Customer> getCustomersByProductId(Long id) {
         Product product;
         try (Session session = sessionFactory.getCurrentSession()) {
             session.getTransaction().begin();
