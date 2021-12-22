@@ -31,4 +31,41 @@ public class CustomerDao {
         return customerList;
     }
 
+    public List<Customer> findAll() {
+        List<Customer> customers;
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            customers = session.createQuery("select c from Customer c", Customer.class).getResultList();
+            session.getTransaction().commit();
+        }
+        return customers;
+    }
+
+    public Customer findCustomerById(Long id) {
+        Customer customer;
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            customer = session.get(Customer.class, id);
+            session.getTransaction().commit();
+        }
+        return customer;
+    }
+
+    public void deleteCustomerById(Long id) {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            Customer customer = session.load(Customer.class, id);
+            session.delete(customer);
+            session.getTransaction().commit();
+        }
+    }
+
+    public Customer saveOrUpdate(Customer customer) {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            session.saveOrUpdate(customer);
+            session.getTransaction().commit();
+        }
+        return customer;
+    }
 }

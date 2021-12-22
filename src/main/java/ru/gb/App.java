@@ -30,6 +30,14 @@ public class App {
         productList = productDao.getProductsByCustomerId(1L);
         productList.forEach(System.out::println);
 
+        customerDao.saveOrUpdate(customerDao.findCustomerById(1L));
+        customerDao.deleteCustomerById(1L);
+        customerDao.findAll().forEach(System.out::println);
+
+        productDao.saveOrUpdate(productDao.findProductById(1L));
+        productDao.deleteProductById(1L);
+        productDao.findAll().forEach(System.out::println);
+
         sessionFactory.close();
     }
 }

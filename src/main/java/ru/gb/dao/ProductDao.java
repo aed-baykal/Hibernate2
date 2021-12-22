@@ -30,4 +30,42 @@ public class ProductDao {
         }
         return productList;
     }
+
+    public List<Product> findAll() {
+        List<Product> products;
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            products = session.createQuery("select p from Product p", Product.class).getResultList();
+            session.getTransaction().commit();
+        }
+        return products;
+    }
+
+    public Product findProductById(Long id) {
+        Product product;
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            product = session.get(Product.class, id);
+            session.getTransaction().commit();
+        }
+        return product;
+    }
+
+    public void deleteProductById(Long id) {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            Product product = session.load(Product.class, id);
+            session.delete(product);
+            session.getTransaction().commit();
+        }
+    }
+
+    public Product saveOrUpdate(Product product) {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.getTransaction().begin();
+            session.saveOrUpdate(product);
+            session.getTransaction().commit();
+        }
+        return product;
+    }
 }

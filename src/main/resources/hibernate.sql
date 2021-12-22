@@ -19,8 +19,8 @@ create table if not exists product_customer
     product_id bigint,
     customer_id  bigint,
 
-    foreign key (product_id) references product (id),
-    foreign key (customer_id) references customer (id)
+    foreign key (product_id) references product (id) on delete cascade,
+    foreign key (customer_id) references customer (id) on delete cascade
 );
 
 insert into customer (name)
